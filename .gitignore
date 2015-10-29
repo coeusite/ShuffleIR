@@ -60,3 +60,4 @@ target/
 *.py~
 *.wxg~
 outputs/*.png
+test.py
