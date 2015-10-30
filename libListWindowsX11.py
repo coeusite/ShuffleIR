@@ -15,7 +15,7 @@ def listVisibleWindowsHierrarchy(window, indent):
         name = win.get_wm_name()
         attrs = win.get_attributes()
         if attrs.map_state == X.IsViewable:
-            print win.id, indent, name
+            #print win.id, indent, name
             listWindows.append((win.id, indent, name))
             listVisibleWindowsHierrarchy(win, indent+'-')
     
@@ -26,3 +26,9 @@ def listVisibleWindows():
     root = display.screen().root
     listVisibleWindowsHierrarchy(root, '-')
     
+
+def getBox(winID):
+    dpy = Display()
+    data = dpy.create_resource_object('window', winID).get_geometry()
+    boxWin = (data.x, data.y, data.x + data.width, data.y + data.height)
+    return boxWin

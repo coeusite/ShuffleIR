@@ -77,6 +77,7 @@ class ShuffleClassifier:
         tmp = block.resize((config.BlockSize, config.BlockSize)).convert('RGBA')
         
         im = self.mask.copy()
+        #print self.mask, tmp
         im.paste(tmp, (0,0,config.BlockSize,config.BlockSize), self.mask)        
         return im
         

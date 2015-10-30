@@ -4,6 +4,7 @@
 #
 
 import wx
+# Image Dialog
 import wx.lib.mixins.inspection as wit
 import wx.lib.imagebrowser as ib
 
@@ -14,6 +15,8 @@ import wx.lib.imagebrowser as ib
 # end wxGlade
 
 from PIL import Image
+import pyscreenshot as ImageGrab
+
 import time, os, glob
 import ConfigParser
 
@@ -21,6 +24,7 @@ from ShuffleClassifier import ShuffleClassifier
 
 import dataNationalDex, dataStageID
 import libImgConverter
+import libListWindowsX11 as libListWindows
 import config
 
 mac = ShuffleClassifier()
@@ -28,8 +32,7 @@ mac = ShuffleClassifier()
 # Frames
 from dialogSelectIcons import dialogSelectIcons
 from dialogNewIcon import dialogNewIcon
-
-import dataNationalDex
+from dialogListWindows import dialogListWindows
 
 class frameShuffleNew(wx.Frame):
     def __init__(self, *args, **kwds):
@@ -160,7 +163,8 @@ class frameShuffleNew(wx.Frame):
         
         self.combo_StageID.AppendItems(dataStageID.list)
         
-        self.onRecognize()
+        self.idTargetWin = 12804312
+        #self.onRecognize()
         
     def load_config(self):
         print 'Loading config'
@@ -180,6 +184,8 @@ class frameShuffleNew(wx.Frame):
             config.BlockSize = int(tmpConfig.get('Advance_Setting','BlockSize'))
             config.pathMask = tmpConfig.get('Advance_Setting','Path to Mask')
             
+            # Mask Path
+            mac.mask = Image.open(config.pathMask)
             print "Config Loaded!"
             
             self.apply_config()
@@ -432,17 +438,17 @@ class frameShuffleNew(wx.Frame):
         config.varMetalTimer = self.radio_Metal.GetSelection()+1
         print "Metal Timer: " + str(config.varMetalTimer)
         
-    def onCapture(self, event):  # wxGlade: frameShuffleNew.<event_handler>
-        print "Event handler 'onCapture' not implemented!"
-        event.Skip()
         
     def onExport(self, event):  # wxGlade: frameShuffleNew.<event_handler>
         print "Exporting results to ShuffleMove"
         mac.write_board(config.varStageID, config.pathBoard)
         
     def onSetting(self, event):  # wxGlade: frameShuffleNew.<event_handler>
-        print "Event handler 'onSetting' not implemented!"
-        event.Skip()
+        dlg = dialogListWindows(self)
+        if dlg.ShowModal() == wx.OK:
+            self.idTargetWin = dlg.winID
+            print dlg.winID
+        dlg.Destroy()
         
     def onSave(self, event):  # wxGlade: frameShuffleNew.<event_handler>
         try:
@@ -542,6 +548,16 @@ class frameShuffleNew(wx.Frame):
         self.bitmap.SetBitmap(libImgConverter.PilImageToWxBitmap(self.PILimage.resize((240,240))))
         
         self.onRecognize()
+        
+    def onCapture(self, event):  # wxGlade: frameShuffleNew.<event_handler>
+        
+        img=ImageGrab.grab(bbox=libListWindows.getBox(self.idTargetWin), backend='imagemagick')
+        self.PILimage = img.crop(config.varBox)
+        self.bitmap.SetBitmap(libImgConverter.PilImageToWxBitmap(self.PILimage.resize((240,240))))
+        
+        #print config.pathMask, config.BlockSize, self.PILimage
+        self.onRecognize()
+        
         
     def onStageID(self, event):  # wxGlade: frameShuffleNew.<event_handler>
         config.varStageID = self.combo_StageID.GetValue()

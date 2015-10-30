@@ -10,30 +10,43 @@ import wx
 # begin wxGlade: extracode
 # end wxGlade
 
+import libListWindowsX11 as libListWindows
+# 
 
 class dialogListWindows(wx.Dialog):
     def __init__(self, *args, **kwds):
         # begin wxGlade: dialogListWindows.__init__
         wx.Dialog.__init__(self, *args, **kwds)
-        self.list_box_3 = wx.ListBox(self, wx.ID_ANY, choices=[], style=wx.LB_ALWAYS_SB | wx.LB_SINGLE)
+        self.listWin = wx.ListBox(self, wx.ID_ANY, choices=[], style=wx.LB_ALWAYS_SB | wx.LB_SINGLE)
         self.button_12 = wx.Button(self, wx.ID_ANY, _("Select"))
         self.button_13 = wx.Button(self, wx.ID_ANY, _("Cancel"))
 
         self.__set_properties()
         self.__do_layout()
-        # end wxGlade
 
+        self.Bind(wx.EVT_BUTTON, self.onOK, self.button_12)
+        self.Bind(wx.EVT_BUTTON, self.onCancel, self.button_13)
+        # end wxGlade
+        
+        self.winID = False
+        
+        libListWindows.listVisibleWindows()
+        for tmp in libListWindows.listWindows:
+            strWin = str(tmp[0]) + str(tmp[1]) + str(tmp[2])
+            self.listWin.Append(strWin)
+        self.listWin.SetSelection(0)
+        
     def __set_properties(self):
         # begin wxGlade: dialogListWindows.__set_properties
         self.SetTitle(_("dialog_1"))
-        self.list_box_3.SetMinSize(wx.DLG_SZE(self.list_box_3, (300, 100)))
+        self.listWin.SetMinSize(wx.DLG_SZE(self.listWin, (300, 100)))
         # end wxGlade
 
     def __do_layout(self):
         # begin wxGlade: dialogListWindows.__do_layout
         sizer_9 = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_2 = wx.GridSizer(1, 2, 1, 1)
-        sizer_9.Add(self.list_box_3, 0, wx.ALIGN_CENTER | wx.EXPAND, 0)
+        sizer_9.Add(self.listWin, 0, wx.ALIGN_CENTER | wx.EXPAND, 0)
         grid_sizer_2.Add(self.button_12, 0, wx.ALIGN_RIGHT, 0)
         grid_sizer_2.Add(self.button_13, 0, 0, 0)
         sizer_9.Add(grid_sizer_2, 1, wx.ALIGN_CENTER | wx.EXPAND, 0)
@@ -41,5 +54,13 @@ class dialogListWindows(wx.Dialog):
         sizer_9.Fit(self)
         self.Layout()
         # end wxGlade
+        
 
+    def onOK(self, event):  # wxGlade: dialogListWindows.<event_handler>
+        index = self.listWin.GetSelection()
+        self.winID = libListWindows.listWindows[index][0]
+        self.EndModal(wx.OK)
+
+    def onCancel(self, event):  # wxGlade: dialogListWindows.<event_handler>
+        self.EndModal(wx.CANCEL)
 # end of class dialogListWindows

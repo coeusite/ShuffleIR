@@ -58,18 +58,20 @@ class dialogNewIcon(wx.Dialog):
         self.Layout()
         # end wxGlade
 
-    def onSave(self, event):  # wxGlade: dialogSelectIcons.<event_handler>
+    def onSave(self, event):  # wxGlade: dialogNewIcon.<event_handler>
         #
         index = self.list_box_1.GetSelection()
+        
         self.keyIcon = dataNationalDex.keys[index]
         if self.checkbox_1.IsChecked():
-            self.nameIcon = self.keyIcon + '-i'
-        else:                
-            self.nameIcon = self.keyIcon 
+            suffix = '-i'
+        else:
+            suffix = ''
+        self.nameIcon = self.keyIcon + suffix
         
         self.EndModal(wx.OK)
-
-    def onCancel(self, event):  # wxGlade: dialogSelectIcons.<event_handler>
-        self.EndModal(wx.CANCEL)
         
+    def onCancel(self, event):  # wxGlade: dialogNewIcon.<event_handler>
+        self.EndModal(wx.CANCEL)
+        event.Skip()
 # end of class dialogNewIcon
