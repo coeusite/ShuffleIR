@@ -77,10 +77,10 @@ list = {\
     "26": "Raichu", \
     "27": "Sandshrew", \
     "28": "Sandslash", \
-    "29": "Nidoran_f", \
+    "29": "Nidoran-f", \
     "30": "Nidorina", \
     "31": "Nidoqueen", \
-    "32": "Nidoran_m", \
+    "32": "Nidoran-m", \
     "33": "Nidorino", \
     "34": "Nidoking", \
     "35": "Clefairy", \
