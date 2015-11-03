@@ -15,7 +15,7 @@ import wx.lib.imagebrowser as ib
 # end wxGlade
 
 from PIL import Image
-import pyscreenshot as ImageGrab
+#import pyscreenshot as ImageGrab
 
 import time, os, glob
 import ConfigParser
@@ -24,7 +24,7 @@ from ShuffleClassifier import ShuffleClassifier
 
 import dataNationalDex, dataStageID
 import libImgConverter
-import libListWindowsX11 as libListWindows
+#import libListWindowsX11 as libListWindows
 import config
 
 mac = ShuffleClassifier()
@@ -32,7 +32,7 @@ mac = ShuffleClassifier()
 # Frames
 from dialogSelectIcons import dialogSelectIcons
 from dialogNewIcon import dialogNewIcon
-from dialogListWindows import dialogListWindows
+#from dialogListWindows import dialogListWindows
 
 class frameShuffleNew(wx.Frame):
     def __init__(self, *args, **kwds):
@@ -448,6 +448,8 @@ class frameShuffleNew(wx.Frame):
         mac.write_board(config.varStageID, config.pathBoard)
         
     def onSetting(self, event):  # wxGlade: frameShuffleNew.<event_handler>
+        event.skip()
+        
         dlg = dialogListWindows(self)
         if dlg.ShowModal() == wx.OK:
             self.idTargetWin = dlg.winID
@@ -554,6 +556,8 @@ class frameShuffleNew(wx.Frame):
         self.onRecognize()
         
     def onCapture(self, event):  # wxGlade: frameShuffleNew.<event_handler>
+        
+        event.skip()
         
         img=ImageGrab.grab(bbox=libListWindows.getBox(self.idTargetWin), backend='imagemagick')
         self.PILimage = img.crop(config.varBox)
