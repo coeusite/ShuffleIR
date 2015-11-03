@@ -61,3 +61,4 @@ target/
 *.wxg~
 outputs/*.png
 test.py
+virtenv/
