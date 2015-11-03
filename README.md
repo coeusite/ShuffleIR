@@ -12,6 +12,9 @@ See wiki for details
 
 
 ## License
-  GNU GENERAL PUBLIC LICENSE Version 2
+  - Copyright 2015 CoeusITE
   - Pillow: PIL Software License
   - WxPython: wxWindows License
+  - Samples: Contributed by 天天, 立扑爸爸, 怪论
+
+This program is licensed under GNU General Public License Version 2. Please read and agree to the terms of the included license before use.
