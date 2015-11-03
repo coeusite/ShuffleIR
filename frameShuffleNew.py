@@ -163,7 +163,7 @@ class frameShuffleNew(wx.Frame):
         
         self.combo_StageID.AppendItems(dataStageID.list)
         
-        self.idTargetWin = 12804312
+        self.idTargetWin = 12624296
         #self.onRecognize()
         
     def load_config(self):
@@ -542,9 +542,6 @@ class frameShuffleNew(wx.Frame):
         self.pathImage = openFileDialog.GetFile()
         openFileDialog.Destroy()
         
-        if flagDebug:
-            PILimage.save('image/snapshot.png','PNG')
-        
         self.PILimage = PILimage.crop(config.varBox)
         
         #print self.PILimage.resize((240,240))
@@ -556,6 +553,10 @@ class frameShuffleNew(wx.Frame):
     def onCapture(self, event):  # wxGlade: frameShuffleNew.<event_handler>
         
         img=ImageGrab.grab(bbox=libListWindows.getBox(self.idTargetWin), backend='imagemagick')
+        
+        if flagDebug:
+            img.save('image/snapshot.png','PNG')
+        
         self.PILimage = img.crop(config.varBox)
         self.bitmap.SetBitmap(libImgConverter.PilImageToWxBitmap(self.PILimage.resize((240,240))))
         
