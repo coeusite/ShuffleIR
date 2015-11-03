@@ -11,6 +11,8 @@ import wx
 import gettext
 from frameShuffleNew import frameShuffleNew
 
+flagDebug = True
+
 class ShuffleIR(wx.App):
     def OnInit(self):
         wx.InitAllImageHandlers()

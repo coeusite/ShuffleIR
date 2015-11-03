@@ -537,9 +537,13 @@ class frameShuffleNew(wx.Frame):
             except:
                 wx.LogError("Cannot open file '%s'."%openFileDialog.GetPath())
                 pass
+                event.skip
         
         self.pathImage = openFileDialog.GetFile()
         openFileDialog.Destroy()
+        
+        if flagDebug:
+            PILimage.save('image/snapshot.png','PNG')
         
         self.PILimage = PILimage.crop(config.varBox)
         
