@@ -183,6 +183,7 @@ class frameShuffleNew(wx.Frame):
             exec("config.varBox = " + tmpConfig.get('Advance_Setting','Box to Crop'))
             config.BlockSize = int(tmpConfig.get('Advance_Setting','BlockSize'))
             config.pathMask = tmpConfig.get('Advance_Setting','Path to Mask')
+            exec("config.flagDebug = " +tmpConfig.get('Advance_Setting','flagDebug'))
             
             # Mask Path
             mac.mask = Image.open(config.pathMask)
@@ -554,8 +555,8 @@ class frameShuffleNew(wx.Frame):
         
         img=ImageGrab.grab(bbox=libListWindows.getBox(self.idTargetWin), backend='imagemagick')
         
-        if flagDebug:
-            img.save('image/snapshot.png','PNG')
+        if config.flagDebug:
+            img.save('images/snapshot.png','PNG')
         
         self.PILimage = img.crop(config.varBox)
         self.bitmap.SetBitmap(libImgConverter.PilImageToWxBitmap(self.PILimage.resize((240,240))))

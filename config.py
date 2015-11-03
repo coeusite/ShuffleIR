@@ -45,3 +45,5 @@ pathBoard = pathShuffleMove + '/config/boards/board.txt'
 #BlockSize = 38
 
 BlockSize = 76
+
+flagDebug = True
