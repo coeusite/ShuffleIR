@@ -1,3 +1,2 @@
 ImageHash == 1.0
 Pillow == 3.0.0
-wxPython==2.9.1.1
