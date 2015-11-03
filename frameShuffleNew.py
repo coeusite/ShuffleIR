@@ -166,6 +166,10 @@ class frameShuffleNew(wx.Frame):
         self.idTargetWin = 12804312
         #self.onRecognize()
         
+        # Disable Snapshot
+        self.button_6.Disable()
+        self.button_10.Disable()
+        
     def load_config(self):
         print 'Loading config'
         try:
