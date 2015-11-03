@@ -136,6 +136,14 @@ class ShuffleClassifier:
             self.results_type.append(self.ref_types[min_index])
             self.results_filenames.append(self.ref_filenames[min_index])
 
+    def label_metal(self):
+        
+        if config.varMetalTimer == 5:
+            label = "Metal"
+        else:
+            label = "Metal_" + str(config.varMetalTimer)
+        return label
+    
     def write_board(self, stagename,boardpath):
         file = open(boardpath, 'w')
         file.write('STAGE '+stagename+'\n')
@@ -145,6 +153,10 @@ class ShuffleClassifier:
             for i in range(0, 6):
                 n = j + i * 6
                 label = self.results[n]
+                
+                if label == "Metal":
+                    label = self.label_metal()
+                
                 file.write(label)
                 if i < 5: 
                     file.write(',')    
