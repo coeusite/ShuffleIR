@@ -1,0 +1,1 @@
+pyinstaller ShuffleApp.py -y -F -n ShuffleIR.exe --version-file=GrabVersion.py
