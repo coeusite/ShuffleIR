@@ -65,3 +65,4 @@ test.py
 # no icon/config uploading
 icons/*.png
 config.ini
+config.ini
